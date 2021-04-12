@@ -13,6 +13,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
+using Microsoft.Win32;
+
+using System.IO;
+using System.Xml.Serialization;
+using System.Security.Cryptography;
+
 namespace PasswordManage
 {
     /// <summary>
@@ -20,9 +27,46 @@ namespace PasswordManage
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ButonNewFile(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            Nullable<bool> result = saveFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                MessageBox.Show("");
+            }
+
+            
+
+            
+
+        }
+
+        private void ButonOpenFile(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.ShowDialog();
+
+            Nullable<bool> result = openFileDialog.ShowDialog();
+
+            if(result == false)
+                return;
+
+
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("LOL");
         }
     }
 }
