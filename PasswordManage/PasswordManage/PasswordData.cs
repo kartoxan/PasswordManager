@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace PasswordManage
 {
-    class PasswordData
+    [Serializable]
+    public class PasswordData
     {
-        List<Password> passwords;
+        public List<Password> passwords;
 
         public PasswordData()
         {

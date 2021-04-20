@@ -6,9 +6,28 @@ using System.Threading.Tasks;
 
 namespace PasswordManage
 {
-    class Password
+    [Serializable]
+    public class Password
     {
-        string login;
-        string pasword;
+        public string site;
+        public string login;
+        public string pasword;
+        public DateTime lastChanges;
+
+        public Password()
+        {
+
+        }
+
+        public Password(string site, string login, string pasword)
+        {
+            this.site = site;
+            this.login = login;
+            this.pasword = pasword;
+            lastChanges = DateTime.Now;
+        }
+
+
+
     }
 }

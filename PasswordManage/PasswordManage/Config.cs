@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PasswordManage
 {
-    class Config
+    [Serializable]
+    public class Config
     {
         public Config()
         {

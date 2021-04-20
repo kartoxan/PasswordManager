@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 namespace PasswordManage
 {
     [Serializable]
-    class File
+    public class FilePassword
     {
-
-
-        PasswordData passwordData;
-        Config config;
         
-        public File() 
+        public PasswordData PasswordData = new PasswordData();
+        public Config config = new Config();
+        
+        public FilePassword() 
         {
-            passwordData = new PasswordData();
-            config = new Config();
+
         }
+
     }
 }

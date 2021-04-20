@@ -1,0 +1,21 @@
+﻿<Window x:Class="PasswordManage.FileСreation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PasswordManage"
+        mc:Ignorable="d"
+        Title="FileСreation" Height="170" Width="340" ResizeMode="NoResize">
+    <Grid>
+        <Button x:Name="button_Create" Content="Создать" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top" Width="75" Click="CreateFile" />
+        <Button x:Name="button_Cancel" Content="Отмена" HorizontalAlignment="Left" Margin="237,103,0,0" VerticalAlignment="Top" Width="85" Click="Cancel"/>
+        <Label x:Name="label" Content="Пароль" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="122,10,0,0" VerticalAlignment="Top" Width="200" Height="26"/>
+        <Label x:Name="label_Copy" Content="Повторие пароль" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="passwordBox_Copy" HorizontalAlignment="Left" Margin="122,41,0,0" VerticalAlignment="Top" Width="200" Height="26"/>
+        <Label x:Name="label1" Content="Путь к файлу:" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label2" Content="" HorizontalAlignment="Left" Margin="99,72,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button_SelectFile" Content="Сохранить как" HorizontalAlignment="Left" Margin="147,103,0,0" VerticalAlignment="Top" Width="85" Click="SelectFile"/>
+
+    </Grid>
+</Window>

@@ -28,45 +28,86 @@ namespace PasswordManage
     public partial class MainWindow : Window
     {
 
+        private FilePassword filePassword;
+        private string PathFile;
+        private bool fielSelected = false;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            UpdateWindow();
+
         }
 
-        private void ButonNewFile(object sender, RoutedEventArgs e)
+        private void UpdateWindow()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-
-            Nullable<bool> result = saveFileDialog.ShowDialog();
-
-            if (result == true)
+            foreach (UIElement item in Grid.Children)
             {
-                MessageBox.Show("");
+
+                if(item is Menu)
+                {
+                    continue;
+                }
+
+                if (filePassword != null)
+                    item.IsEnabled = true;
+                else
+                    item.IsEnabled = false;
+
+            }
+        }
+
+        private void NewFile(object sender, RoutedEventArgs e)
+        {
+            var newW = new FileСreation();
+
+            Nullable<bool> fileСreated = newW.ShowDialog();
+
+            if(fileСreated != false)
+            {
+                XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
+
+                using (FileStream fs = new FileStream(newW.PathFile, FileMode.OpenOrCreate))
+                {
+                    filePassword = (FilePassword)formatter.Deserialize(fs);
+                }
             }
 
-            
+            UpdateWindow();
 
-            
 
         }
 
-        private void ButonOpenFile(object sender, RoutedEventArgs e)
+        private void OpenFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            openFileDialog.ShowDialog();
+            openFileDialog.DefaultExt = ".xml";
+           
+            openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
 
             Nullable<bool> result = openFileDialog.ShowDialog();
 
-            if(result == false)
+            if(result != true)
                 return;
 
+            var newW = new OpenFile();
+            string temp = openFileDialog.FileName;
+            newW.PathFile = openFileDialog.FileName;
 
-        }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("LOL");
+            Nullable<bool> fileOpen = newW.ShowDialog();
+
+            if (fileOpen != false)
+            {
+                filePassword = newW.filePassword;
+                
+            }
+
+            UpdateWindow();
+
         }
     }
 }
