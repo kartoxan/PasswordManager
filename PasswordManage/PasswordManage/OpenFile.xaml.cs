@@ -51,9 +51,9 @@ namespace PasswordManage
                     filePassword = (FilePassword)formatter.Deserialize(fs);
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("Неудалось открить фаил");
+                MessageBox.Show("Неудалось открить фаил: " + ex.Message);
             }
 
             DialogResult = true;

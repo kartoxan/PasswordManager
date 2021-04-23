@@ -9,10 +9,11 @@ namespace PasswordManage
     [Serializable]
     public class Password
     {
-        public string site;
-        public string login;
-        public string pasword;
-        public DateTime lastChanges;
+        public string Site { get; set; }
+        public string login { get; set; }
+        public string password { get; set; }
+
+        public DateTime lastChanges { get; set; }
 
         public Password()
         {
@@ -21,9 +22,9 @@ namespace PasswordManage
 
         public Password(string site, string login, string pasword)
         {
-            this.site = site;
+            this.Site = site;
             this.login = login;
-            this.pasword = pasword;
+            this.password = pasword;
             lastChanges = DateTime.Now;
         }
 

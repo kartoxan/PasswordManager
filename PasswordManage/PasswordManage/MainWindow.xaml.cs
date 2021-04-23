@@ -20,6 +20,12 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Security.Cryptography;
 
+
+using System.Data;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.ComponentModel;
+
 namespace PasswordManage
 {
     /// <summary>
@@ -30,11 +36,14 @@ namespace PasswordManage
 
         private FilePassword filePassword;
         private string PathFile;
-        private bool fielSelected = false;
+
+        private BindingList<Password> passwords;
 
         public MainWindow()
         {
             InitializeComponent();
+            
+            
 
             UpdateWindow();
 
@@ -44,18 +53,49 @@ namespace PasswordManage
         {
             foreach (UIElement item in Grid.Children)
             {
+                textBox_Site.Text = "";
+                textBox_Password.Text = "";
+                textBox_Login.Text = "";
 
-                if(item is Menu)
+                if (item is Menu)
                 {
                     continue;
                 }
 
                 if (filePassword != null)
+                {
                     item.IsEnabled = true;
-                else
-                    item.IsEnabled = false;
 
+                    
+                }          
+                else
+                {
+                    item.IsEnabled = false;
+                }                   
             }
+
+            if(filePassword != null)
+            {
+                passwords = new BindingList<Password>(filePassword.PasswordData.passwords);
+                passwordGrid.ItemsSource = passwords;
+                menuItem_Save.IsEnabled = true;
+            }
+            else
+            {
+                menuItem_Save.IsEnabled = false;
+            }
+
+            if(passwordGrid.SelectedItem == null)
+            {
+                button_DeletePassword.IsEnabled = false;
+                button_СhangePassword.IsEnabled = false;
+            }
+            else
+            {
+                button_DeletePassword.IsEnabled = true;
+                button_СhangePassword.IsEnabled = true;
+            }
+
         }
 
         private void NewFile(object sender, RoutedEventArgs e)
@@ -64,15 +104,20 @@ namespace PasswordManage
 
             Nullable<bool> fileСreated = newW.ShowDialog();
 
-            if(fileСreated != false)
+            if(fileСreated == true)
             {
+                PathFile = newW.PathFile;
                 XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
 
-                using (FileStream fs = new FileStream(newW.PathFile, FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
                 {
                     filePassword = (FilePassword)formatter.Deserialize(fs);
                 }
+
+                
             }
+
+
 
             UpdateWindow();
 
@@ -100,14 +145,100 @@ namespace PasswordManage
 
             Nullable<bool> fileOpen = newW.ShowDialog();
 
-            if (fileOpen != false)
+            if (fileOpen == true)
             {
                 filePassword = newW.filePassword;
-                
+                PathFile = newW.PathFile;
             }
 
             UpdateWindow();
 
+        }
+
+        private void button_NewPassword_Click(object sender, RoutedEventArgs e)
+        {
+            var NewPasswordWindow = new NewPassword();
+
+            Nullable<bool> result = NewPasswordWindow.ShowDialog();
+
+            if(result == true)
+            {
+                filePassword.PasswordData.passwords.Add(NewPasswordWindow.password);
+                            
+            }
+
+            UpdateWindow();
+
+        }
+
+        private void button_СhangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            var NewPasswordWindow = new NewPassword();
+
+            NewPasswordWindow.password = (Password)passwordGrid.SelectedItem;
+
+            int i = passwords.IndexOf(NewPasswordWindow.password);
+
+            Nullable<bool> result = NewPasswordWindow.ShowDialog();
+
+            if (result == true)
+            {
+                
+                filePassword.PasswordData.passwords[i] = NewPasswordWindow.password;
+
+            }
+
+            UpdateWindow();
+        }
+
+        private void button_DeletePassword_Click(object sender, RoutedEventArgs e)
+        {
+            Password password = (Password)passwordGrid.SelectedItem;
+            //int i = passwords.IndexOf(password);
+
+            filePassword.PasswordData.passwords.Remove(password);
+
+            UpdateWindow();
+
+        }
+
+        private void passwordGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Password password = (Password)passwordGrid.SelectedItem;
+            if(password != null)
+            {
+                textBox_Site.Text = password.Site;
+                textBox_Password.Text = password.password;
+                textBox_Login.Text = password.login;
+            }
+
+            if (passwordGrid.SelectedItem == null)
+            {
+                button_DeletePassword.IsEnabled = false;
+                button_СhangePassword.IsEnabled = false;
+            }
+            else
+            {
+                button_DeletePassword.IsEnabled = true;
+                button_СhangePassword.IsEnabled = true;
+            }
+
+        }
+
+        private void SaveFile(object sender, RoutedEventArgs e)
+        {
+           
+            XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
+
+            using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
+            {
+                formatter.Serialize(fs, filePassword);
+            }
+        }
+
+        private void button3_Copy1_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetData(DataFormats.Text, (Object)textBox_Login.Text);
         }
     }
 }
