@@ -5,17 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PasswordManage"
         mc:Ignorable="d"
-        Title="FileСreation" Height="170" Width="340" ResizeMode="NoResize">
+        Title="FileСreation" Height="230" Width="450" ResizeMode="NoResize">
     <Grid>
-        <Button x:Name="button_Create" Content="Создать" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top" Width="75" Click="CreateFile" />
-        <Button x:Name="button_Cancel" Content="Отмена" HorizontalAlignment="Left" Margin="237,103,0,0" VerticalAlignment="Top" Width="85" Click="Cancel"/>
-        <Label x:Name="label" Content="Пароль" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="122,10,0,0" VerticalAlignment="Top" Width="200" Height="26"/>
-        <Label x:Name="label_Copy" Content="Повторие пароль" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-        <PasswordBox x:Name="passwordBox_Copy" HorizontalAlignment="Left" Margin="122,41,0,0" VerticalAlignment="Top" Width="200" Height="26"/>
-        <Label x:Name="label1" Content="Путь к файлу:" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label2" Content="" HorizontalAlignment="Left" Margin="99,72,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button_SelectFile" Content="Сохранить как" HorizontalAlignment="Left" Margin="147,103,0,0" VerticalAlignment="Top" Width="85" Click="SelectFile"/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="button_Create" Content="Створити" Margin="10" Click="CreateFile" Grid.Column="0" Grid.Row="3" />
+        <Button x:Name="button_Cancel" Content="Відміна" Margin="10" Click="Cancel" Grid.Column="3" Grid.Row="3"/>
+        <Button x:Name="button_SelectFile" Content="Зберегти як" Margin="10" Click="SelectFile" Grid.Column="2" Grid.Row="3"/>
+        
+        
+        
+        <Label x:Name="label" Content="Ключ" Margin="10" />
+        <Label x:Name="label_Copy" Content="Повторіть ключ"  Margin="10" Grid.Column="0" Grid.Row="1" />
+        <Label x:Name="label1" Content="Шлях до файлу:" Margin="10" Grid.Column="0" Grid.Row="2"/>
+
+        <Label x:Name="label2" Content="" Margin="10" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"/>
+
+        <PasswordBox x:Name="passwordBox" Margin="10" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3"/>
+        <PasswordBox x:Name="passwordBox_Copy"  Margin="10" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"/>
+        
+
+        
 
     </Grid>
 </Window>

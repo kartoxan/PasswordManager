@@ -16,6 +16,7 @@ using Microsoft.Win32;
 
 using System.IO;
 using System.Xml.Serialization;
+using System.Security.Cryptography;
 
 namespace PasswordManage
 {
@@ -60,6 +61,11 @@ namespace PasswordManage
 
         private void CreateFile(object sender, RoutedEventArgs e)
         {
+            if(passwordBox.Password.Length < 16)
+            {
+                MessageBox.Show("Пароль должен состоять минимум из 16 символов");
+                return;
+            }
 
             if(passwordBox.Password != passwordBox_Copy.Password)
             {
@@ -67,15 +73,44 @@ namespace PasswordManage
                 return;
             }
 
+            
+
             password = passwordBox.Password;
             
 
             FilePassword file = new FilePassword();
             XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
-
+            /*
             using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
             {
                 formatter.Serialize(fs, file);
+            }
+            */
+
+
+            using (FileStream fileStream = new FileStream(PathFile,FileMode.OpenOrCreate))
+            {
+                using (Aes aes = Aes.Create())
+                {
+                    byte[] key = Encoding.UTF8.GetBytes(password);
+
+                    aes.Key = key;
+
+                    byte[] iv = aes.IV;
+                    fileStream.Write(iv, 0, iv.Length);
+                    
+
+                    using (CryptoStream cryptoStream = new CryptoStream(fileStream, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter encryptWriter = new StreamWriter(cryptoStream))
+                        {
+                            formatter.Serialize(encryptWriter, file);
+                            
+                        }
+                    }
+
+                }
+                    
             }
 
             this.DialogResult = true;
