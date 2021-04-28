@@ -35,6 +35,7 @@ namespace PasswordManage
     {
 
         private FilePassword filePassword;
+        string password;
         private string PathFile;
 
         private BindingList<Password> passwords;
@@ -107,14 +108,46 @@ namespace PasswordManage
             if(fileСreated == true)
             {
                 PathFile = newW.PathFile;
+                password = newW.password;
                 XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
-
+                /*
                 using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
                 {
                     filePassword = (FilePassword)formatter.Deserialize(fs);
                 }
+                */
+                using (FileStream fileStream = new FileStream(PathFile, FileMode.Open))
+                {
+                    using (Aes aes = Aes.Create())
+                    {
+                        byte[] iv = new byte[aes.IV.Length];
+                        int numBytesToRead = aes.IV.Length;
+                        int numBytesRead = 0;
+                        while (numBytesToRead > 0)
+                        {
+                            int n = fileStream.Read(iv, numBytesRead, numBytesToRead);
+                            if (n == 0) break;
 
-                
+                            numBytesRead += n;
+                            numBytesToRead -= n;
+                        }
+
+                        byte[] key = Encoding.UTF8.GetBytes(password);
+
+                        using (CryptoStream cryptoStream = new CryptoStream(
+                           fileStream,
+                           aes.CreateDecryptor(key, iv),
+                           CryptoStreamMode.Read))
+                        {
+                            using (StreamReader decryptReader = new StreamReader(cryptoStream))
+                            {
+                                filePassword = (FilePassword)formatter.Deserialize(decryptReader);
+                            }
+                        }
+                    }
+                }
+
+
             }
 
 
@@ -145,8 +178,11 @@ namespace PasswordManage
 
             Nullable<bool> fileOpen = newW.ShowDialog();
 
+            
+
             if (fileOpen == true)
             {
+                password = newW.password;
                 filePassword = newW.filePassword;
                 PathFile = newW.PathFile;
             }
@@ -229,10 +265,35 @@ namespace PasswordManage
         {
            
             XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
-
+            /*
             using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
             {
                 formatter.Serialize(fs, filePassword);
+            }
+            */
+
+            using (FileStream fileStream = new FileStream(PathFile, FileMode.OpenOrCreate))
+            {
+                using (Aes aes = Aes.Create())
+                {
+                    byte[] key = Encoding.UTF8.GetBytes(password);
+                    aes.Key = key;
+
+                    byte[] iv = aes.IV;
+                    fileStream.Write(iv, 0, iv.Length);
+
+
+                    using (CryptoStream cryptoStream = new CryptoStream(fileStream, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter encryptWriter = new StreamWriter(cryptoStream))
+                        {
+                            formatter.Serialize(encryptWriter, filePassword);
+
+                        }
+                    }
+
+                }
+
             }
         }
 

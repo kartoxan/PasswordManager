@@ -16,6 +16,7 @@ using Microsoft.Win32;
 
 using System.IO;
 using System.Xml.Serialization;
+using System.Security.Cryptography;
 
 namespace PasswordManage
 {
@@ -40,18 +41,50 @@ namespace PasswordManage
         private void Confirm(object sender, RoutedEventArgs e)
         {
 
-            password = passwordBox.Password;
+            password = passwordBox.Password.Trim();
 
             try
             {
                 XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
-
+                /*
                 using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
                 {
                     filePassword = (FilePassword)formatter.Deserialize(fs);
                 }
+                */
+                using (FileStream fileStream = new FileStream(PathFile, FileMode.Open))
+                {
+                    using (Aes aes = Aes.Create())
+                    {
+                        byte[] iv = new byte[aes.IV.Length];
+                        int numBytesToRead = aes.IV.Length;
+                        int numBytesRead = 0;
+                        while (numBytesToRead > 0)
+                        {
+                            int n = fileStream.Read(iv, numBytesRead, numBytesToRead);
+                            if (n == 0) break;
+
+                            numBytesRead += n;
+                            numBytesToRead -= n;
+                        }
+
+                        byte[] key = Encoding.UTF8.GetBytes(password);
+
+                        using (CryptoStream cryptoStream = new CryptoStream(
+                           fileStream,
+                           aes.CreateDecryptor(key, iv),
+                           CryptoStreamMode.Read))
+                        {
+                            using (StreamReader decryptReader = new StreamReader(cryptoStream))
+                            {
+                                filePassword = (FilePassword)formatter.Deserialize(decryptReader);
+                            }
+                        }
+                    }
+
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Неудалось открить фаил: " + ex.Message);
             }

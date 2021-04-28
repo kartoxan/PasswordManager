@@ -11,10 +11,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="1*" />
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+
+            <RowDefinition Height="9*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="0.7*" />
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
@@ -24,41 +27,38 @@
 
         <Menu Height="20" VerticalAlignment="Top" Grid.ColumnSpan="5">
             <MenuItem Header="Файл">
-                <MenuItem Header="Открить" Click="OpenFile" />
-                <MenuItem Header="Новий фаил" Click="NewFile"/>
-                <MenuItem Name="menuItem_Save" Header="Сохранить" Click="SaveFile"/>
+                <MenuItem Header="Відкрити" Click="OpenFile" />
+                <MenuItem Header="Новий фаіл" Click="NewFile"/>
+                <MenuItem Name="menuItem_Save" Header="Зберегти" Click="SaveFile"/>
             </MenuItem>
-            <MenuItem Header="Настройки" ></MenuItem>
-            <MenuItem Header="Справка" ></MenuItem>
+            <MenuItem Header="Довідка"></MenuItem>
 
         </Menu>
 
-        <DataGrid IsReadOnly="True" Grid.Row="2" Grid.ColumnSpan="5" Grid.RowSpan="2" AutoGenerateColumns="False" x:Name="passwordGrid" Margin="10,10" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" SelectionMode="Single" CanUserAddRows="False" CanUserResizeRows="False" SelectionChanged="passwordGrid_SelectionChanged">
+        <DataGrid IsReadOnly="True" Grid.Row="5" Grid.ColumnSpan="5" Grid.RowSpan="2" AutoGenerateColumns="False" x:Name="passwordGrid" Margin="10,10" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" SelectionMode="Single" CanUserAddRows="False" CanUserResizeRows="False" SelectionChanged="passwordGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Site}"  Header="Сайт" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Path=login}"  Header="Логин" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path=Site}"  Header="Заголовок" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path=login}"  Header="Логін" Width="*"/>
                 <DataGridTextColumn Binding="{Binding Path=password}" Header="Пароль" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Path=lastChanges, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"  Header="Последние изменения"  Width="*" />
+                <DataGridTextColumn Binding="{Binding Path=lastChanges, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"  Header="Останні зміни"  Width="*" />
             </DataGrid.Columns>
         </DataGrid>
 
+        <Button x:Name="button_СhangePassword" Content="Редагувати" Grid.Column="4" Grid.Row="1" Margin="10,5" Click="button_СhangePassword_Click"/>
+        <Button x:Name="button_DeletePassword" Content="Видалити" Grid.Column="4" Grid.Row="2" Margin="10,5" Click="button_DeletePassword_Click"/>
+        <Button x:Name="button_NewPassword" Content="Новий пароль" Grid.Column="4" Grid.Row="3" Margin="10,5" Click="button_NewPassword_Click"/>
 
+        <Label x:Name="label" Content="Заголовок:" Grid.Column="0" Grid.Row="1" Margin="10,5" VerticalAlignment="Center" />
+        <Label x:Name="label1" Content="Логін:" Grid.Column="0" Grid.Row="2" Margin="10,5" VerticalAlignment="Center" />
+        <Label x:Name="label2" Content="Пароль:" Grid.Column="0" Grid.Row="3" Margin="10,5" VerticalAlignment="Center" />
 
-        <StackPanel Grid.Column="4" Grid.Row="1" Margin="10">
-            <Button x:Name="button_СhangePassword" Content="Изменить" Margin="0,10,0,0" Click="button_СhangePassword_Click"/>
-            <Button x:Name="button_DeletePassword" Content="Удалить" Margin="0,10,0,0" Click="button_DeletePassword_Click"/>
-            <Button x:Name="button_NewPassword" Content="Новий пароль" Margin="0,10,0,0" Click="button_NewPassword_Click"/>
+        <TextBox x:Name="textBox_Site" IsReadOnly="True" Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="1" Margin="10,5" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="textBox_Login" IsReadOnly="True" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="2" Margin="10,5" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="textBox_Password" IsReadOnly="True" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="3"  Margin="10,5" VerticalContentAlignment="Center"/>
 
-        </StackPanel>
-        <Label x:Name="label" Content="Сайт:" Grid.Column="0" HorizontalAlignment="Left" Margin="10,20,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <Label x:Name="label1" Content="Логин:" Grid.Column="0" HorizontalAlignment="Left" Margin="10,46,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <Label x:Name="label2" Content="Пароль:" Grid.Column="0" HorizontalAlignment="Left" Margin="10,77,0,0" Grid.Row="1" VerticalAlignment="Top" />
-        <TextBox x:Name="textBox_Password" IsReadOnly="True" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="69.2,81,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="textBox_Login" IsReadOnly="True" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="69.2,50,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="textBox_Site" IsReadOnly="True" Grid.ColumnSpan="3" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="69.2,21,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="280"/>
-        <Button x:Name="button3" Grid.ColumnSpan="2" Content="Показать" Grid.Column="1" HorizontalAlignment="Left" Margin="65.2,80,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="button3_Copy" Content="Скопировать" Grid.Column="2" HorizontalAlignment="Left" Margin="16.2,80,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="button3_Copy1" Grid.ColumnSpan="2" Content="Скопировать" Grid.Column="1" HorizontalAlignment="Left" Margin="65.2,49,0,0" Grid.Row="1" VerticalAlignment="Top" Width="155" Click="button3_Copy1_Click"/>
+        <Button x:Name="button3_Copy1" Content="Скопіювати" Grid.Column="3" Grid.Row="2" Margin="10,5" Click="button3_Copy1_Click"/>
+        <Button x:Name="button3_Copy" Content="Скопіювати" Grid.Column="3" Grid.Row="3" Margin="10,5" />
+        
 
 
     </Grid>
