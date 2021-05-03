@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 namespace PasswordManage
 {
     [Serializable]
-    public class FilePassword
+    public class PasswordContainer
     {
         
         public PasswordData PasswordData = new PasswordData();
         public Config config = new Config();
         
-        public FilePassword() 
+        public PasswordContainer() 
         {
 
         }

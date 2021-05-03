@@ -30,7 +30,7 @@ namespace PasswordManage
         public string password;
         public string PathFile;
 
-        public FilePassword filePassword;
+        public PasswordContainer filePassword;
 
         public OpenFile()
         {
@@ -45,7 +45,7 @@ namespace PasswordManage
 
             try
             {
-                XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
+                XmlSerializer formatter = new XmlSerializer(typeof(PasswordContainer));
                 /*
                 using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
                 {
@@ -77,7 +77,7 @@ namespace PasswordManage
                         {
                             using (StreamReader decryptReader = new StreamReader(cryptoStream))
                             {
-                                filePassword = (FilePassword)formatter.Deserialize(decryptReader);
+                                filePassword = (PasswordContainer)formatter.Deserialize(decryptReader);
                             }
                         }
                     }

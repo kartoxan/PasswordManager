@@ -78,8 +78,8 @@ namespace PasswordManage
             password = passwordBox.Password;
             
 
-            FilePassword file = new FilePassword();
-            XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
+            PasswordContainer file = new PasswordContainer();
+            XmlSerializer formatter = new XmlSerializer(typeof(PasswordContainer));
             /*
             using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
             {

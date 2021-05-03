@@ -34,7 +34,7 @@ namespace PasswordManage
     public partial class MainWindow : Window
     {
 
-        private FilePassword filePassword;
+        private PasswordContainer filePassword;
         string password;
         private string PathFile;
 
@@ -109,7 +109,7 @@ namespace PasswordManage
             {
                 PathFile = newW.PathFile;
                 password = newW.password;
-                XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
+                XmlSerializer formatter = new XmlSerializer(typeof(PasswordContainer));
                 /*
                 using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
                 {
@@ -141,7 +141,7 @@ namespace PasswordManage
                         {
                             using (StreamReader decryptReader = new StreamReader(cryptoStream))
                             {
-                                filePassword = (FilePassword)formatter.Deserialize(decryptReader);
+                                filePassword = (PasswordContainer)formatter.Deserialize(decryptReader);
                             }
                         }
                     }
@@ -264,7 +264,7 @@ namespace PasswordManage
         private void SaveFile(object sender, RoutedEventArgs e)
         {
            
-            XmlSerializer formatter = new XmlSerializer(typeof(FilePassword));
+            XmlSerializer formatter = new XmlSerializer(typeof(PasswordContainer));
             /*
             using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
             {
