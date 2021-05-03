@@ -26,6 +26,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.ComponentModel;
 
+using PasswordManage.Views;
+
 namespace PasswordManage
 {
     /// <summary>
@@ -110,12 +112,9 @@ namespace PasswordManage
                 PathFile = newW.PathFile;
                 password = newW.password;
                 XmlSerializer formatter = new XmlSerializer(typeof(PasswordContainer));
-                /*
-                using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
-                {
-                    filePassword = (FilePassword)formatter.Deserialize(fs);
-                }
-                */
+
+
+
                 using (FileStream fileStream = new FileStream(PathFile, FileMode.Open))
                 {
                     using (Aes aes = Aes.Create())
@@ -265,12 +264,8 @@ namespace PasswordManage
         {
            
             XmlSerializer formatter = new XmlSerializer(typeof(PasswordContainer));
-            /*
-            using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fs, filePassword);
-            }
-            */
+
+
 
             using (FileStream fileStream = new FileStream(PathFile, FileMode.OpenOrCreate))
             {
@@ -300,6 +295,13 @@ namespace PasswordManage
         private void button3_Copy1_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetData(DataFormats.Text, (Object)textBox_Login.Text);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Certificate certificate = new Certificate();
+            certificate.ShowDialog();
+
         }
     }
 }

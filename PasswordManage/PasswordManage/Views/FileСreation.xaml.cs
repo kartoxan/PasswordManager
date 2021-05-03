@@ -52,10 +52,29 @@ namespace PasswordManage
             if (result == false)
                 return;
             
+            
+
             PathFile = saveFileDialog.FileName;
 
 
-            label2.Content = PathFile;
+            setPathFile();
+
+        }
+
+        private void setPathFile()
+        {
+            if (PathFile.Length > 75)
+            {
+
+                string fileName = PathFile.Split(@"\"[0]).Last<string>();
+                string temp = PathFile.Substring(0, 3) + "..." + @"\" + fileName;
+                label2.Content = temp;
+            }
+            else
+            {
+                label2.Content = PathFile;
+            }
+
 
         }
 
@@ -63,13 +82,13 @@ namespace PasswordManage
         {
             if(passwordBox.Password.Length < 16)
             {
-                MessageBox.Show("Пароль должен состоять минимум из 16 символов");
+                MessageBox.Show("Пароль повинен містити мінімум 16 символів");
                 return;
             }
 
             if(passwordBox.Password != passwordBox_Copy.Password)
             {
-                MessageBox.Show("Пароли не совпвдают");
+                MessageBox.Show("Паролі не співпадають");
                 return;
             }
 
@@ -80,15 +99,12 @@ namespace PasswordManage
 
             PasswordContainer file = new PasswordContainer();
             XmlSerializer formatter = new XmlSerializer(typeof(PasswordContainer));
-            /*
-            using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fs, file);
-            }
-            */
 
 
-            using (FileStream fileStream = new FileStream(PathFile,FileMode.OpenOrCreate))
+
+
+
+            using (FileStream fileStream = new FileStream(PathFile, FileMode.Create))
             {
                 using (Aes aes = Aes.Create())
                 {
@@ -98,19 +114,19 @@ namespace PasswordManage
 
                     byte[] iv = aes.IV;
                     fileStream.Write(iv, 0, iv.Length);
-                    
+
 
                     using (CryptoStream cryptoStream = new CryptoStream(fileStream, aes.CreateEncryptor(), CryptoStreamMode.Write))
                     {
                         using (StreamWriter encryptWriter = new StreamWriter(cryptoStream))
                         {
                             formatter.Serialize(encryptWriter, file);
-                            
+
                         }
                     }
 
                 }
-                    
+
             }
 
             this.DialogResult = true;

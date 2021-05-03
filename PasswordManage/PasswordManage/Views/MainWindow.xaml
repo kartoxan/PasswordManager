@@ -31,7 +31,7 @@
                 <MenuItem Header="Новий фаіл" Click="NewFile"/>
                 <MenuItem Name="menuItem_Save" Header="Зберегти" Click="SaveFile"/>
             </MenuItem>
-            <MenuItem Header="Довідка"></MenuItem>
+            <MenuItem Header="Довідка" Click="MenuItem_Click"></MenuItem>
 
         </Menu>
 

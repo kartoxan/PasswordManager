@@ -19,8 +19,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="button" Grid.Column="0" Grid.Row="2" Content="Подтвердить" Margin="10" Click="Confirm"/>
-        <Button x:Name="button1" Grid.Column="2" Grid.Row="2" Content="Отмена" Margin="10" Click="Cancel"/>
+        <Button x:Name="button" Grid.Column="0" Grid.Row="2" Content="Відкрити" Margin="10" Click="Confirm"/>
+        <Button x:Name="button1" Grid.Column="2" Grid.Row="2" Content="Скасувати" Margin="10" Click="Cancel"/>
 
 
 

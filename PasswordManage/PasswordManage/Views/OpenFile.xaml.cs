@@ -46,12 +46,7 @@ namespace PasswordManage
             try
             {
                 XmlSerializer formatter = new XmlSerializer(typeof(PasswordContainer));
-                /*
-                using (FileStream fs = new FileStream(PathFile, FileMode.OpenOrCreate))
-                {
-                    filePassword = (FilePassword)formatter.Deserialize(fs);
-                }
-                */
+
                 using (FileStream fileStream = new FileStream(PathFile, FileMode.Open))
                 {
                     using (Aes aes = Aes.Create())
@@ -84,9 +79,9 @@ namespace PasswordManage
 
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Неудалось открить фаил: " + ex.Message);
+                MessageBox.Show("Пароль не вірний");
             }
 
             DialogResult = true;
@@ -102,7 +97,27 @@ namespace PasswordManage
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            label2.Content = PathFile;
+            setPathFile();
+
+  
         }
+
+        private void setPathFile()
+        {
+            if (PathFile.Length > 75)
+            {
+
+                string fileName = PathFile.Split(@"\"[0]).Last<string>();
+                string temp = PathFile.Substring(0, 3) + "..." + @"\" + fileName;
+                label2.Content = temp;
+            }
+            else
+            {
+                label2.Content = PathFile;
+            }
+
+
+        }
+
     }
 }

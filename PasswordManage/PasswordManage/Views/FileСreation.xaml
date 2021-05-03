@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
 
         <Button x:Name="button_Create" Content="Створити" Margin="10" Click="CreateFile" Grid.Column="0" Grid.Row="3" />
-        <Button x:Name="button_Cancel" Content="Відміна" Margin="10" Click="Cancel" Grid.Column="3" Grid.Row="3"/>
+        <Button x:Name="button_Cancel" Content="Скасувати" Margin="10" Click="Cancel" Grid.Column="3" Grid.Row="3"/>
         <Button x:Name="button_SelectFile" Content="Зберегти як" Margin="10" Click="SelectFile" Grid.Column="2" Grid.Row="3"/>
         
         
@@ -34,8 +34,8 @@
 
         <Label x:Name="label2" Content="" Margin="10" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"/>
 
-        <PasswordBox x:Name="passwordBox" Margin="10" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3"/>
-        <PasswordBox x:Name="passwordBox_Copy"  Margin="10" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"/>
+        <PasswordBox x:Name="passwordBox" Margin="10" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" VerticalContentAlignment="Center" />
+        <PasswordBox x:Name="passwordBox_Copy"  Margin="10" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" VerticalContentAlignment="Center" />
         
 
         
