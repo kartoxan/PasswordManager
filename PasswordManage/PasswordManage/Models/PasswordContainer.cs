@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 namespace PasswordManage
 {
     [Serializable]
-    public class PasswordData
+    public class PasswordContainer
     {
+
         public List<Password> passwords;
 
-        public PasswordData()
+
+        public PasswordContainer() 
         {
             passwords = new List<Password>();
         }
+
     }
 }

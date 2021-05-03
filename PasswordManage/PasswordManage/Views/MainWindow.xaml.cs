@@ -77,7 +77,7 @@ namespace PasswordManage
 
             if(filePassword != null)
             {
-                passwords = new BindingList<Password>(filePassword.PasswordData.passwords);
+                passwords = new BindingList<Password>(filePassword.passwords);
                 passwordGrid.ItemsSource = passwords;
                 menuItem_Save.IsEnabled = true;
             }
@@ -199,7 +199,7 @@ namespace PasswordManage
 
             if(result == true)
             {
-                filePassword.PasswordData.passwords.Add(NewPasswordWindow.password);
+                filePassword.passwords.Add(NewPasswordWindow.password);
                             
             }
 
@@ -220,7 +220,7 @@ namespace PasswordManage
             if (result == true)
             {
                 
-                filePassword.PasswordData.passwords[i] = NewPasswordWindow.password;
+                filePassword.passwords[i] = NewPasswordWindow.password;
 
             }
 
@@ -232,7 +232,7 @@ namespace PasswordManage
             Password password = (Password)passwordGrid.SelectedItem;
             //int i = passwords.IndexOf(password);
 
-            filePassword.PasswordData.passwords.Remove(password);
+            filePassword.passwords.Remove(password);
 
             UpdateWindow();
 
