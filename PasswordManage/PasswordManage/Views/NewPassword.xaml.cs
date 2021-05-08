@@ -35,6 +35,12 @@ namespace PasswordManage
         private void button_Confirm_Click(object sender, RoutedEventArgs e)
         {
 
+            if(textBox_Site.Text == "" && textBox_Login.Text == "" && textBox_Password.Text == "")
+            {
+                MessageBox.Show("Заовніть поля");
+                return;
+            }
+
             password = new Password(textBox_Site.Text, textBox_Login.Text, textBox_Password.Text);
             this.DialogResult = true;
             this.Close();

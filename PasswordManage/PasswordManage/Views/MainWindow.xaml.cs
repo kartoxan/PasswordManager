@@ -42,6 +42,8 @@ namespace PasswordManage
 
         private BindingList<Password> passwords;
 
+        private bool Saved = true;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -146,6 +148,7 @@ namespace PasswordManage
                     }
                 }
 
+                Saved = true;
 
             }
 
@@ -174,6 +177,7 @@ namespace PasswordManage
             string temp = openFileDialog.FileName;
             newW.PathFile = openFileDialog.FileName;
 
+            
 
             Nullable<bool> fileOpen = newW.ShowDialog();
 
@@ -186,6 +190,8 @@ namespace PasswordManage
                 PathFile = newW.PathFile;
             }
 
+
+            Saved = true;
             UpdateWindow();
 
         }
@@ -199,9 +205,10 @@ namespace PasswordManage
             if(result == true)
             {
                 filePassword.passwords.Add(NewPasswordWindow.password);
-                            
+                Saved = false;
             }
 
+            
             UpdateWindow();
 
         }
@@ -220,9 +227,11 @@ namespace PasswordManage
             {
                 
                 filePassword.passwords[i] = NewPasswordWindow.password;
-
+                Saved = false;
             }
 
+
+            
             UpdateWindow();
         }
 
@@ -232,6 +241,8 @@ namespace PasswordManage
             //int i = passwords.IndexOf(password);
 
             filePassword.passwords.Remove(password);
+
+            Saved = false;
 
             UpdateWindow();
 
@@ -290,10 +301,12 @@ namespace PasswordManage
                 }
 
             }
+            Saved = true;
         }
 
         private void button3_Copy1_Click(object sender, RoutedEventArgs e)
         {
+            Clipboard.Clear();
             Clipboard.SetData(DataFormats.Text, (Object)textBox_Login.Text);
         }
 
@@ -301,6 +314,35 @@ namespace PasswordManage
         {
             Certificate certificate = new Certificate();
             certificate.ShowDialog();
+
+        }
+
+        private void button3_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetData(DataFormats.Text, (Object)textBox_Password.Text);
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+
+            if(!Saved)
+            {
+                e.Cancel = true;
+
+                DialogueWindow dialogueWindow = new DialogueWindow();
+
+                Nullable<bool> result = dialogueWindow.ShowDialog();
+
+                if (result == true)
+                {
+                    e.Cancel = false;
+                    //e.Cancel = false;
+                }
+            }
+
+
+            
 
         }
     }
